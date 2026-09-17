@@ -4,29 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artifact — Privacy-First Design Review</title>
+    <!-- Favicon: Modern Privacy Lens & Scan Frame -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%230b0f17%22/><path d=%22M25 35 L25 25 L35 25%22 fill=%22none%22 stroke=%22%23f8fafc%22 stroke-width=%224%22 stroke-linecap=%22round%22/><path d=%22M75 35 L75 25 L65 25%22 fill=%22none%22 stroke=%22%23f8fafc%22 stroke-width=%224%22 stroke-linecap=%22round%22/><path d=%22M25 65 L25 75 L35 75%22 fill=%22none%22 stroke=%22%23f8fafc%22 stroke-width=%224%22 stroke-linecap=%22round%22/><path d=%22M75 65 L75 75 L65 75%22 fill=%22none%22 stroke=%22%23f8fafc%22 stroke-width=%224%22 stroke-linecap=%22round%22/><rect x=%2236%22 y=%2236%22 width=%2228%22 height=%2228%22 rx=%224%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%225%22 fill=%22%23f59e0b%22/></svg>">
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts: Clean Modern Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0b0f17; color: #e2e8f0; }
         input, textarea { background-color: #131822; border-color: #1e293b; color: #f8fafc; }
         input:focus, textarea:focus { border-color: #f59e0b; outline: none; }
+        .star-btn { cursor: pointer; transition: transform 0.15s ease, color 0.15s ease; user-select: none; }
+        .star-btn:hover { transform: scale(1.2); }
     </style>
 </head>
 <body class="min-h-screen selection:bg-amber-500/30 selection:text-amber-200 antialiased">
 
-    <!-- Header Section -->
-    <header class="border-b border-slate-800/60 bg-[#0b0f17]/80 backdrop-blur-md sticky top-0 z-50">
+    <!-- Header Section with Modern Privacy Lens Logo -->
+    <header class="border-b border-slate-800/60 bg-[#0b0f17]/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div>
-                <h1 class="text-xl font-bold tracking-tight text-white">artifact</h1>
-                <p class="text-[11px] text-slate-400 font-medium">Privacy-first design reviews & metadata scrubbing.</p>
+            <div class="flex items-center gap-3">
+                <!-- Sharp Modern Privacy Scan Logo Mark -->
+                <div class="w-9 h-9 rounded-xl bg-[#131822] border border-slate-800 flex items-center justify-center shadow-inner relative overflow-hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-5 h-5">
+                        <path d="M22 32 L22 22 L32 22" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M78 32 L78 22 L68 22" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M22 68 L22 78 L32 78" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M78 68 L78 78 L68 78" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+                        <rect x="34" y="34" width="32" height="32" rx="4" fill="none" stroke="#f59e0b" stroke-width="5"/>
+                        <circle cx="50" cy="50" r="6" fill="#f59e0b"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-0.5">artifact<span class="text-amber-500 text-xl leading-none">.</span></h1>
+                    <p class="text-[10px] text-slate-400 font-medium tracking-wide">Privacy-first design reviews & metadata scrubbing.</p>
+                </div>
             </div>
             <div class="text-[11px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Secure
             </div>
         </div>
     </header>
@@ -48,18 +63,18 @@
                     <input type="text" id="userName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-2.5 text-sm border transition">
                 </div>
 
-                <!-- Clean Interactive Star Rating -->
+                <!-- Fully Fixed Interactive Star Rating -->
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1.5">Design Rating</label>
-                    <div class="flex items-center gap-2 bg-[#131822] border border-slate-800 rounded-xl px-4 py-2.5">
-                        <div id="starContainer" class="flex gap-1 cursor-pointer">
-                            <span data-value="1" class="text-xl text-amber-400 hover:scale-110 transition">★</span>
-                            <span data-value="2" class="text-xl text-amber-400 hover:scale-110 transition">★</span>
-                            <span data-value="3" class="text-xl text-amber-400 hover:scale-110 transition">★</span>
-                            <span data-value="4" class="text-xl text-amber-400 hover:scale-110 transition">★</span>
-                            <span data-value="5" class="text-xl text-amber-400 hover:scale-110 transition">★</span>
+                    <div class="flex items-center justify-between bg-[#131822] border border-slate-800 rounded-xl px-4 py-2.5">
+                        <div id="starContainer" class="flex gap-1.5">
+                            <span data-value="1" class="star-btn text-2xl text-amber-500">★</span>
+                            <span data-value="2" class="star-btn text-2xl text-amber-500">★</span>
+                            <span data-value="3" class="star-btn text-2xl text-amber-500">★</span>
+                            <span data-value="4" class="star-btn text-2xl text-amber-500">★</span>
+                            <span data-value="5" class="star-btn text-2xl text-amber-500">★</span>
                         </div>
-                        <span id="ratingText" class="text-xs font-medium text-amber-400 ml-3">5/5 - Flawless</span>
+                        <span id="ratingText" class="text-xs font-medium text-amber-400">5/5 - Flawless</span>
                     </div>
                 </div>
 
@@ -73,22 +88,22 @@
                     <label class="block text-xs font-medium text-slate-300 mb-1.5">Design Screenshot (Optional)</label>
                     <label class="flex flex-col items-center justify-center border border-dashed border-slate-700 hover:border-amber-500/50 bg-[#131822] p-5 rounded-xl cursor-pointer transition group text-center">
                         <div class="w-8 h-8 rounded-full bg-slate-800 text-amber-400 flex items-center justify-center mb-2 group-hover:scale-105 transition">
-                            <i data-lucide="image-plus" class="w-4 h-4"></i>
+                            📷
                         </div>
                         <span id="fileName" class="text-xs text-slate-300 font-medium">Drop a photo here, or tap to choose</span>
-                        <span class="text-[10px] text-slate-500 mt-1">JPEG works best — EXIF stripped automatically</span>
+                        <span class="text-[10px] text-slate-500 mt-1">JPEG/PNG works best — EXIF stripped automatically</span>
                         <input type="file" id="imageInput" accept="image/*" class="hidden">
                     </label>
                 </div>
 
                 <!-- Trust Badge Box -->
                 <div class="bg-[#171e2e] border border-slate-800 rounded-xl p-3.5 flex items-start gap-3 text-xs text-slate-300">
-                    <i data-lucide="lock" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+                    <span class="text-amber-400 text-base leading-none">🔒</span>
                     <p class="leading-relaxed"><strong class="text-white">Nothing is uploaded.</strong> The photo is read directly in your browser. It never touches a server — ours or anyone else's.</p>
                 </div>
 
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10">
-                    <i data-lucide="send" class="w-4 h-4"></i> Publish Secure Review
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10 cursor-pointer">
+                    🚀 Publish Secure Review
                 </button>
             </form>
         </section>
@@ -103,7 +118,6 @@
             <div id="feedbackContainer" class="space-y-3">
                 <!-- Empty State -->
                 <div id="emptyState" class="text-center py-12 bg-[#111622] border border-slate-800/80 rounded-2xl text-slate-500">
-                    <i data-lucide="inbox" class="w-7 h-7 mx-auto mb-2 opacity-40"></i>
                     <p class="text-xs">No feedback recorded yet</p>
                 </div>
             </div>
@@ -119,145 +133,162 @@
 
     <!-- Script Logic -->
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentRating = 5;
+            const stars = document.querySelectorAll('#starContainer .star-btn');
+            const ratingText = document.getElementById('ratingText');
 
-        let currentRating = 5;
-        const stars = document.querySelectorAll('#starContainer span');
-        const ratingText = document.getElementById('ratingText');
-
-        const ratingLabels = {
-            1: "1/5 - Reconsider",
-            2: "2/5 - Major Tweaks",
-            3: "3/5 - Needs Polish",
-            4: "4/5 - Solid Design",
-            5: "5/5 - Flawless"
-        };
-
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                currentRating = Number(this.getAttribute('data-value'));
-                ratingText.textContent = ratingLabels[currentRating];
-                stars.forEach((s, idx) => {
-                    s.style.opacity = idx < currentRating ? '1' : '0.3';
-                });
-            });
-        });
-
-        const form = document.getElementById('feedbackForm');
-        const imageInput = document.getElementById('imageInput');
-        const fileNameSpan = document.getElementById('fileName');
-        const feedbackContainer = document.getElementById('feedbackContainer');
-        const emptyState = document.getElementById('emptyState');
-        const feedbackCount = document.getElementById('feedbackCount');
-
-        let compressedImageBase64 = null;
-
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            fileNameSpan.textContent = file.name + " (Scrubbing EXIF metadata...)";
-            fileNameSpan.className = "text-xs text-amber-400 font-medium";
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    const MAX_WIDTH = 900;
-                    if (width > MAX_WIDTH) {
-                        height = Math.round((height * MAX_WIDTH) / width);
-                        width = MAX_WIDTH;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    compressedImageBase64 = canvas.toDataURL('image/jpeg', 0.85);
-                    fileNameSpan.textContent = file.name + " (Cleaned & Secured ✓)";
-                    fileNameSpan.className = "text-xs text-emerald-400 font-semibold";
-                }
-                img.src = event.target.result;
-            }
-            reader.readAsDataURL(file);
-        });
-
-        let feedbacks = JSON.parse(localStorage.getItem('artifact_clean_feedbacks')) || [];
-        renderFeedbacks();
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('userName').value;
-            const comment = document.getElementById('userComment').value;
-
-            const newFeedback = {
-                id: Date.now(),
-                name,
-                rating: currentRating,
-                comment,
-                image: compressedImageBase64,
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+            const ratingLabels = {
+                1: "1/5 - Reconsider",
+                2: "2/5 - Major Tweaks",
+                3: "3/5 - Needs Polish",
+                4: "4/5 - Solid Design",
+                5: "5/5 - Flawless"
             };
 
-            feedbacks.unshift(newFeedback);
-            localStorage.setItem('artifact_clean_feedbacks', JSON.stringify(feedbacks));
+            // Explicit click listener for each star
+            stars.forEach(star => {
+                star.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentRating = Number(this.getAttribute('data-value'));
+                    ratingText.textContent = ratingLabels[currentRating];
+                    
+                    stars.forEach((s, idx) => {
+                        if (idx < currentRating) {
+                            s.style.color = '#f59e0b'; // Bright amber
+                            s.style.opacity = '1';
+                        } else {
+                            s.style.color = '#334155'; // Dim slate color
+                            s.style.opacity = '0.5';
+                        }
+                    });
+                });
+            });
 
-            form.reset();
-            compressedImageBase64 = null;
-            fileNameSpan.textContent = "Drop a photo here, or tap to choose";
-            fileNameSpan.className = "text-xs text-slate-300 font-medium";
-            currentRating = 5;
-            ratingText.textContent = ratingLabels[5];
-            stars.forEach(s => s.style.opacity = '1');
+            const form = document.getElementById('feedbackForm');
+            const imageInput = document.getElementById('imageInput');
+            const fileNameSpan = document.getElementById('fileName');
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            const emptyState = document.getElementById('emptyState');
+            const feedbackCount = document.getElementById('feedbackCount');
 
+            let compressedImageBase64 = null;
+
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                fileNameSpan.textContent = file.name + " (Processing...)";
+                fileNameSpan.className = "text-xs text-amber-400 font-medium";
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        const MAX_WIDTH = 800;
+                        if (width > MAX_WIDTH) {
+                            height = Math.round((height * MAX_WIDTH) / width);
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        compressedImageBase64 = canvas.toDataURL('image/jpeg', 0.8);
+                        fileNameSpan.textContent = file.name + " (Scrubbed & Ready ✓)";
+                        fileNameSpan.className = "text-xs text-emerald-400 font-semibold";
+                    }
+                    img.onerror = function() {
+                        fileNameSpan.textContent = "Error reading image. Try another.";
+                        fileNameSpan.className = "text-xs text-rose-400 font-medium";
+                    }
+                    img.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            });
+
+            let feedbacks = JSON.parse(localStorage.getItem('artifact_clean_feedbacks')) || [];
             renderFeedbacks();
-        });
 
-        function renderFeedbacks() {
-            feedbackCount.textContent = ${feedbacks.length} entr${feedbacks.length === 1 ? 'y' : 'ies'};
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            if (feedbacks.length === 0) {
-                emptyState.style.display = 'block';
-                return;
+                const name = document.getElementById('userName').value;
+                const comment = document.getElementById('userComment').value;
+
+                const newFeedback = {
+                    id: Date.now(),
+                    name,
+                    rating: currentRating,
+                    comment,
+                    image: compressedImageBase64,
+                    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+                };
+
+                feedbacks.unshift(newFeedback);
+                localStorage.setItem('artifact_clean_feedbacks', JSON.stringify(feedbacks));
+
+                form.reset();
+                compressedImageBase64 = null;
+                fileNameSpan.textContent = "Drop a photo here, or tap to choose";
+                fileNameSpan.className = "text-xs text-slate-300 font-medium";
+                currentRating = 5;
+                ratingText.textContent = ratingLabels[5];
+                stars.forEach(s => {
+                    s.style.color = '#f59e0b';
+                    s.style.opacity = '1';
+                });
+
+                renderFeedbacks();
+            });
+
+            function renderFeedbacks() {
+                feedbackCount.textContent = `${feedbacks.length} entr${feedbacks.length === 1 ? 'y' : 'ies'}`;
+
+                if (feedbacks.length === 0) {
+                    if (emptyState) emptyState.style.display = 'block';
+                    return;
+                }
+
+                if (emptyState) emptyState.style.display = 'none';
+                
+                const cards = feedbacks.map(item => `
+                    <div class="bg-[#111622] border border-slate-800/80 rounded-xl p-5 space-y-3 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center font-bold text-xs">
+                                    ${escapeHtml(item.name.charAt(0).toUpperCase())}
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-semibold text-white">${escapeHtml(item.name)}</h4>
+                                    <span class="text-[10px] text-slate-500">${item.date}</span>
+                                </div>
+                            </div>
+                            <div class="text-amber-400 text-xs tracking-wider">
+                                ${'★'.repeat(Number(item.rating))}${'☆'.repeat(5 - Number(item.rating))}
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(item.comment)}</p>
+                        ${item.image ? `<div class="mt-2 overflow-hidden rounded-lg border border-slate-800"><img src="${item.image}" class="w-full max-h-52 object-cover" alt="Review Design"></div>` : ''}
+                    </div>
+                `).join('');
+
+                const existingCards = feedbackContainer.querySelectorAll('.bg-\\[\\#111622\\]:not(#emptyState)');
+                existingCards.forEach(c => c.remove());
+                feedbackContainer.insertAdjacentHTML('beforeend', cards);
             }
 
-            emptyState.style.display = 'none';
-            
-            const cards = feedbacks.map(item => `
-                <div class="bg-[#111622] border border-slate-800/80 rounded-xl p-5 space-y-3">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2.5">
-                            <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center font-bold text-xs">
-                                ${item.name.charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-semibold text-white">${escapeHtml(item.name)}</h4>
-                                <span class="text-[10px] text-slate-500">${item.date}</span>
-                            </div>
-                        </div>
-                        <div class="text-amber-400 text-xs tracking-wider">
-                            ${'★'.repeat(Number(item.rating))}${'☆'.repeat(5 - Number(item.rating))}
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(item.comment)}</p>
-                    ${item.image ? <div class="mt-2 overflow-hidden rounded-lg border border-slate-800"><img src="${item.image}" class="w-full max-h-52 object-cover" alt="Review Design"></div> : ''}
-                </div>
-            `).join('');
-
-            const existingCards = feedbackContainer.querySelectorAll('.bg-\\[\\#111622\\]:not(#emptyState)');
-            existingCards.forEach(c => c.remove());
-            feedbackContainer.insertAdjacentHTML('beforeend', cards);
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
+            function escapeHtml(text) {
+                if (!text) return '';
+                return text.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            }
+        });
     </script>
 </body>
 </html>
