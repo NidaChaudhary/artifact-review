@@ -3,215 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artifact — Privacy-First Design Reviews</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='4' fill='%230b0f19' stroke='%23ff7b00' stroke-width='2'/><path fill='%23ff7b00' d='M7 12h10M12 7l5 5-5 5'/></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Artifact — Privacy-First Design Review & EXIF Scrubber</title>
+    <!-- Favicon: Refined Black & Orange Square Frame -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='8' width='84' height='84' rx='12' fill='%230b0f17' stroke='%23f59e0b' stroke-width='8'/><rect x='32' y='32' width='36' height='36' rx='4' fill='%23ffffff'/><line x1='50' y1='22' x2='50' y2='78' stroke='%23f59e0b' stroke-width='6' stroke-linecap='round'/><line x1='22' y1='50' x2='78' y2='50' stroke='%23f59e0b' stroke-width='6' stroke-linecap='round'/></svg>">
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Anton (Retro Bold) & Inter (Professional Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --border-color: rgba(255, 255, 255, 0.12);
-            --accent-orange: #ff7b00;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-color: #0b0f17;
+            --card-bg: #111622;
+            --accent-orange: #f59e0b;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 40px 20px;
+            color: #e2e8f0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
+        /* Retro/Bold Typography for Logo */
+        .logo-font {
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 0.05em; /* Slight letter spacing */
         }
-
-        header {
-            margin-bottom: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
+        /* Styling for form elements */
+        input, textarea {
+            background-color: #131822 !important;
+            border-color: #1e293b !important;
+            color: #f8fafc !important;
         }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
+        input:focus, textarea:focus {
+            border-color: var(--accent-orange) !important;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.1) !important;
         }
-
-        /* Black logo box with orange outline frame and subtle rounding */
-        .logo-frame {
-            width: 44px;
-            height: 44px;
-            background: #0b0f19;
-            border: 2px solid var(--accent-orange);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 123, 0, 0.2);
-        }
-
-        .logo-frame svg {
-            width: 22px;
-            height: 22px;
-            fill: var(--accent-orange);
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: #ffffff;
-            text-transform: lowercase;
-        }
-
-        h1 span {
-            color: var(--accent-orange);
-        }
-
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 13px;
-            letter-spacing: 0.8px;
-            margin-top: 3px;
-        }
-
-        .secure-badge {
-            background: rgba(16, 185, 129, 0.1);
-            color: #34d399;
-            border: 1px solid rgba(52, 211, 153, 0.25);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-
-        .form-section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-orange);
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
-
-        .form-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
-            letter-spacing: 0.3px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            background: #030712;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 16px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.15);
-        }
-
-        .rating-box {
-            background: #030712;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .stars {
-            display: flex;
-            gap: 6px;
+        /* Interactive Star Styling */
+        .star-btn {
             cursor: pointer;
+            transition: transform 0.1s ease-in-out, color 0.1s ease-in-out;
+            user-select: none;
         }
-
-        .star {
-            font-size: 22px;
-            color: #374151;
-            transition: color 0.2s;
+        .star-btn:hover {
+            transform: scale(1.2);
         }
-
-        .star.active {
-            color: #fbbf24;
-        }
-
-        .rating-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: #fbbf24;
-        }
-
+        /* Refined Upload Dropzone */
         .upload-dropzone {
-            border: 2px dashed rgba(255, 123, 0, 0.4);
-            background: rgba(255, 123, 0, 0.02);
+            border: 2px dashed rgba(245, 158, 11, 0.5);
+            background: rgba(19, 24, 34, 0.5);
             border-radius: 12px;
-            padding: 25px;
+            padding: 24px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
         }
-
         .upload-dropzone:hover {
             border-color: var(--accent-orange);
-            background: rgba(255, 123, 0, 0.05);
+            background: rgba(245, 158, 11, 0.05);
         }
-
         .upload-dropzone input[type="file"] {
             position: absolute;
             top: 0;
@@ -221,276 +71,153 @@
             opacity: 0;
             cursor: pointer;
         }
-
-        .upload-icon {
-            width: 42px;
-            height: 42px;
-            background: rgba(255, 123, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px auto;
-        }
-
-        .upload-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--accent-orange);
-        }
-
-        .upload-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .upload-hint {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Live Metadata Security Scrubbed Box */
+        /* Live Metadata Security Inspector Box */
         .security-report {
             display: none;
-            margin-top: 12px;
+            margin-top: 16px;
             background: #030712;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.3); /* Emerald green border */
             border-radius: 10px;
-            padding: 14px;
+            padding: 16px;
+            box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.05);
         }
-
         .security-report.active {
             display: block;
         }
-
         .report-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 12px;
+            margin-bottom: 10px;
+            font-size: 13px;
             font-weight: 700;
-            color: #34d399;
+            color: #34d399; /* Emerald green */
         }
-
         .report-items {
             font-size: 12px;
-            color: var(--text-muted);
+            color: #9ca3af; /* Text muted */
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
         }
-
         .report-items span {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-
         .report-items span::before {
             content: "🛡️";
-            font-size: 10px;
-        }
-
-        .privacy-note {
             font-size: 11px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 15px;
-            line-height: 1.4;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #ff7b00, #e06d00);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(255, 123, 0, 0.3);
-            margin-top: 25px;
-            letter-spacing: 0.5px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 25px rgba(255, 123, 0, 0.4);
-        }
-
-        .community-section {
-            margin-top: 40px;
-        }
-
-        .community-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .community-title {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-        }
-
-        .entries-count {
-            font-size: 12px;
-            color: var(--accent-orange);
-            background: rgba(255, 123, 0, 0.1);
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-weight: 600;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen p-6 md:p-10 selection:bg-amber-500/20 selection:text-amber-200">
 
-    <div class="container">
-        <header>
-            <div class="logo-area">
-                <div class="logo-frame">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
+    <!-- Header Section with Refined Logo & Font -->
+    <header class="max-w-2xl mx-auto mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/60 pb-6">
+        <div class="logo-area flex items-center gap-4">
+            <!-- Refined Logo: Black Square Box with Orange Outline Frame -->
+            <div class="logo-frame w-12 h-12 bg-[#0b0f17] border-4 border-amber-500 rounded-xl flex items-center justify-center shadow-inner group">
+                <div class="w-6 h-6 bg-white rounded-md transform rotate-0 group-hover:rotate-12 transition-transform duration-300"></div>
+            </div>
+            <div>
+                <!-- Refined Title: Retro Bold Font with Proper Spacing -->
+                <h1 class="logo-font text-4xl font-bold tracking-wide text-white flex items-center gap-1">arti<span class="text-amber-500">fact</span></h1>
+                <p class="text-[11px] text-slate-400 font-medium tracking-wider uppercase mt-1.5">Privacy-First Design Review & EXIF Scrubber</p>
+            </div>
+        </div>
+        <!-- Status Badge -->
+        <div class="text-[11px] font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-4 py-1.5 rounded-full flex items-center gap-2 shadow-inner self-start sm:self-center">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-2xl mx-auto space-y-8">
+
+        <!-- Submission Card -->
+        <section class="card bg-[#111622] border border-slate-800/80 rounded-2xl p-8 shadow-2xl space-y-6">
+            <div>
+                <span class="form-section-title text-[11px] font-bold text-amber-500 uppercase tracking-widest">secure review check</span>
+                <h2 class="text-2xl font-bold text-white tracking-tight mt-1">Submit your design feedback</h2>
+                <p class="text-xs text-slate-400 mt-2.5 leading-relaxed">Upload screenshots safely. Hidden location tags, camera metadata, and EXIF data are instantly stripped right in your browser. The photo never touches any server.</p>
+            </div>
+
+            <form id="feedbackForm" class="space-y-5">
+                <!-- Name Field -->
                 <div>
-                    <h1>arti<span>fact</span></h1>
-                    <p class="subtitle">Privacy-first design reviews & metadata scrubbing.</p>
-                </div>
-            </div>
-            <div class="secure-badge">
-                ● Client-Side Secure
-            </div>
-        </header>
-
-        <div class="card">
-            <div class="form-section-title">Secure Review Check</div>
-            <h2>Submit your design feedback</h2>
-            <p class="form-desc">Upload screenshots safely. Hidden location tags and camera metadata are instantly stripped right in your browser.</p>
-
-            <form id="reviewForm">
-                <div class="input-group">
-                    <label for="name">Your Name / Alias</label>
-                    <input type="text" id="name" placeholder="e.g. Nida" required>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Your Name / Alias</label>
+                    <input type="text" id="userName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-3 text-sm border transition bg-[#131822] focus:ring-2 focus:ring-amber-500/20">
                 </div>
 
-                <div class="input-group">
-                    <label>Design Rating</label>
-                    <div class="rating-box">
-                        <div class="stars" id="starContainer">
-                            <span class="star active" data-value="1">★</span>
-                            <span class="star active" data-value="2">★</span>
-                            <span class="star active" data-value="3">★</span>
-                            <span class="star active" data-value="4">★</span>
-                            <span class="star active" data-value="5">★</span>
+                <!-- Interactive Star Rating -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Rating</label>
+                    <div class="flex items-center justify-between bg-[#131822] border border-slate-800 rounded-xl px-4 py-2.5">
+                        <div id="starContainer" class="flex gap-2 cursor-pointer">
+                            <span data-value="1" class="star-btn text-3xl text-amber-400 hover:text-amber-300 transition-colors">★</span>
+                            <span data-value="2" class="star-btn text-3xl text-amber-400 hover:text-amber-300 transition-colors">★</span>
+                            <span data-value="3" class="star-btn text-3xl text-amber-400 hover:text-amber-300 transition-colors">★</span>
+                            <span data-value="4" class="star-btn text-3xl text-amber-400 hover:text-amber-300 transition-colors">★</span>
+                            <span data-value="5" class="star-btn text-3xl text-amber-400 hover:text-amber-300 transition-colors">★</span>
                         </div>
-                        <span class="rating-text" id="ratingText">5/5 - Flawless</span>
+                        <span id="ratingText" class="text-xs font-bold text-amber-400">5/5 - Flawless</span>
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label for="feedback">Feedback & Thoughts</label>
-                    <textarea id="feedback" rows="4" placeholder="What do you think about layout, color scheme, or usability?" required></textarea>
+                <!-- Feedback Field -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Feedback & Thoughts</label>
+                    <textarea id="userComment" rows="3" required placeholder="What do you think about layout, color scheme, or usability?" class="w-full rounded-xl p-4 text-sm border transition resize-none bg-[#131822] focus:ring-2 focus:ring-amber-500/20"></textarea>
                 </div>
 
-                <div class="input-group">
-                    <label>Design Screenshot (Optional)</label>
-                    <div class="upload-dropzone" id="dropzone">
-                        <div class="upload-icon">
-                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                <!-- Refined Upload Dropzone -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Screenshot (Optional)</label>
+                    <label class="upload-dropzone block border-2 border-dashed border-slate-700 hover:border-amber-500/60 bg-[#131822] p-6 rounded-xl cursor-pointer transition group text-center">
+                        <div class="upload-icon w-10 h-10 rounded-full bg-slate-800 text-amber-400 flex items-center justify-center mb-3 mx-auto group-hover:scale-105 transition">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                         </div>
-                        <div class="upload-title">Drop a photo here, or tap to choose</div>
-                        <div class="upload-hint">JPEG/PNG works best — EXIF stripped automatically</div>
-                        <input type="file" id="fileInput" accept="image/*">
-                    </div>
+                        <span id="fileName" class="upload-title text-sm text-slate-200 font-medium block">Drop a photo here, or tap to choose</span>
+                        <span class="upload-hint text-xs text-slate-500 mt-1 block">JPEG/PNG works best — EXIF stripped automatically</span>
+                        <input type="file" id="imageInput" accept="image/*" class="hidden">
+                    </label>
 
-                    <!-- Live Metadata Security Inspector Box -->
+                    <!-- Live Metadata Security Inspector Box (Revealed on File Select) -->
                     <div class="security-report" id="securityReport">
                         <div class="report-header">
                             <span id="fileNameDisplay">file.png</span>
-                            <span>🔒 EXIF Scrubbed</span>
+                            <span class="flex items-center gap-2"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span> EXIF Scrubbed</span>
                         </div>
                         <div class="report-items">
                             <span>GPS Location metadata removed</span>
                             <span>Camera & Device fingerprints wiped</span>
                             <span>Thumbnail & Timestamp clean</span>
+                            <span>All hidden EXIF tags sanitized</span>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn">Publish Secure Review</button>
-
-                <div class="privacy-note">
-                    🔒 Nothing is uploaded to any server. Images are parsed locally in your browser memory with metadata stripped instantly.
+                <!-- Privacy Note Box -->
+                <div class="bg-[#171e2e] border border-slate-800/60 rounded-xl p-4 flex items-start gap-4 text-xs text-slate-300 shadow-inner">
+                    <span class="text-amber-400 text-lg leading-none mt-0.5">🔒</span>
+                    <p class="leading-relaxed"><strong class="text-white">Nothing is uploaded to any server.</strong> The photo is parsed locally in your browser's memory. Metadata is stripped instantly before any temporary local processing. Your privacy is 100% guaranteed.</p>
                 </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-amber-500/10 cursor-pointer tracking-wide">
+                    🚀 Publish Secure Review
+                </button>
             </form>
-        </div>
+        </section>
 
-        <div class="community-section">
-            <div class="community-header">
-                <span class="community-title">Community Reviews</span>
-                <span class="entries-count" id="entryCount">0 entries</span>
+        <!-- Feed Section (Placeholder) -->
+        <section class="community-section space-y-4">
+            <div class="community-header flex items-center justify-between px-1 border-b border-slate-800/60 pb-3">
+                <h3 class="community-title text-xs font-semibold text-slate-400 uppercase tracking-wider">Community Reviews</h3>
+                <span id="feedbackCount" class="entries-count text-xs text-amber-500 font-bold bg-amber-950/60 px-3 py-1 rounded-full">0 entries</span>
             </div>
-        </div>
-    </div>
 
-    <script>
-        // Star Rating Logic
-        const stars = document.querySelectorAll('.star');
-        const ratingText = document.getElementById('ratingText');
-        let currentRating = 5;
-
-        const ratingLabels = {
-            1: "1/5 - Needs Major Work",
-            2: "2/5 - Fair",
-            3: "3/5 - Good",
-            4: "4/5 - Very Good",
-            5: "5/5 - Flawless"
-        };
-
-        stars.forEach((star, index) => {
-            star.addEventListener('click', () => {
-                currentRating = index + 1;
-                stars.forEach((s, i) => {
-                    if (i < currentRating) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-                ratingText.textContent = ratingLabels[currentRating];
-            });
-        });
-
-        // File Selection & Metadata Security Scrubber Preview
-        const fileInput = document.getElementById('fileInput');
-        const securityReport = document.getElementById('securityReport');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                fileNameDisplay.textContent = "✓ " + file.name + " (" + Math.round(file.size / 1024) + " KB)";
-                securityReport.classList.add('active');
-            } else {
-                securityReport.classList.remove('active');
-            }
-        });
-
-        // Form Submit Handler
-        document.getElementById('reviewForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert("Review published successfully! Image metadata was scrubbed securely on your device.");
-            document.getElementById('reviewForm').reset();
-            securityReport.classList.remove('active');
-        });
-    </script>
-</body>
-</html>
+            <div id="feedbackContainer" class="space-y-4">
+                <!-- Empty State -->
+                <div id="emptyState"
