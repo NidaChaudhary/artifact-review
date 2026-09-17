@@ -1,217 +1,391 @@
-<div class="max-w-2xl mx-auto w-full space-y-8">
-    <!-- Top Navigation / Header -->
-    <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
-        <div class="flex items-center gap-4">
-            <!-- 2D Retro Badge Logo -->
-            <div class="retro-logo-badge">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9"/>
-                    <polygon points="12 7 14 12 12 17 10 12 12 7" fill="#f97316" opacity="0.3"/>
-                    <circle cx="12" cy="12" r="2" fill="#f97316"/>
-                </svg>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifact — Secure EXIF & Privacy Scrubber</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0c10;
+            --card-dark: #11151d;
+            --card-border: #222b3b;
+            --accent-coral: #ff6a00;
+            --accent-amber: #eab308;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+        }
+        .font-retro {
+            font-family: 'Share Tech Mono', monospace;
+        }
+        /* 2D Retro Badge Logo matching user's aesthetic */
+        .retro-badge-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #0d1117;
+            border: 2px solid var(--accent-coral);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 106, 0, 0.2);
+        }
+        .retro-badge-logo::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 106, 0, 0.4);
+            pointer-events: none;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 240px;
+            max-height: 280px;
+        }
+        input, textarea {
+            background-color: #07090e !important;
+            border-color: var(--card-border) !important;
+            color: #f8fafc !important;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent-coral) !important;
+            box-shadow: 0 0 0 2px rgba(255, 106, 0, 0.2) !important;
+            outline: none;
+        }
+        .dropzone-box {
+            border: 2px dashed rgba(255, 106, 0, 0.4);
+            background: rgba(17, 21, 29, 0.7);
+            transition: all 0.2s ease-in-out;
+        }
+        .dropzone-box:hover {
+            border-color: var(--accent-coral);
+            background: rgba(255, 106, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen px-4 py-8 md:px-8 selection:bg-orange-500/20 selection:text-orange-400">
+
+    <div class="max-w-4xl mx-auto space-y-10">
+
+        <!-- Header Section -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
+            <div class="flex items-center gap-4">
+                <div class="retro-badge-logo">
+                    <span class="text-orange-500 font-bold text-xl font-retro">A</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-retro text-2xl font-bold tracking-wider text-white">ARTI<span class="text-orange-500">FACT</span></h1>
+                        <span class="text-[10px] font-retro bg-orange-500/10 text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded">v2.5</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-medium tracking-wide mt-0.5">Secure EXIF Metadata Scrubber & Privacy Inspector</p>
+                </div>
             </div>
+
+            <div class="flex items-center gap-3">
+                <div class="text-xs font-semibold bg-emerald-950/70 text-emerald-400 border border-emerald-800/50 px-4 py-2 rounded-xl flex items-center gap-2 font-retro">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
+                </div>
+            </div>
+        </header>
+
+        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
+            <div class="border-b border-slate-800/80 pb-4">
+                <span class="text-[11px] font-bold text-orange-500 uppercase tracking-widest font-retro">Privacy Overview</span>
+                <h2 class="text-xl font-bold text-white font-retro mt-1">Protect Your Digital Footprint</h2>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Photos taken with smartphones contain hidden EXIF tags revealing exact GPS coordinates, camera specs, and creation timestamps. Artifact sanitizes your images 100% locally in your browser before sharing online.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-slate-200 font-retro">Metadata Stripping Matrix</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between p-2.5 rounded-lg bg-[#07090e] border border-slate-800">
+                            <span class="text-slate-300">📍 Precise GPS Coordinates</span>
+                            <span class="text-orange-400 font-bold font-retro">Removed</span>
+                        </div>
+                        <div class="flex justify-between p-2.5 rounded-lg bg-[#07090e] border border-slate-800">
+                            <span class="text-slate-300">📷 Camera Make & Serial Hash</span>
+                            <span class="text-orange-400 font-bold font-retro">Sanitized</span>
+                        </div>
+                        <div class="flex justify-between p-2.5 rounded-lg bg-[#07090e] border border-slate-800">
+                            <span class="text-slate-300">🕒 Creation Timestamps & Offsets</span>
+                            <span class="text-orange-400 font-bold font-retro">Cleaned</span>
+                        </div>
+                        <div class="flex justify-between p-2.5 rounded-lg bg-[#07090e] border border-slate-800">
+                            <span class="text-slate-300">🖼️ Embedded Thumbnails</span>
+                            <span class="text-orange-400 font-bold font-retro">Wiped</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-center text-xs font-semibold text-slate-400 mb-2 font-retro">Metadata Exposure Risks</div>
+                    <div class="chart-container">
+                        <canvas id="privacyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
             <div>
-                <h1 class="retro-font text-xl font-bold tracking-wider text-white">ARTI<span class="text-orange-500">FACT</span></h1>
-                <p class="text-[11px] text-slate-400 font-medium tracking-widest uppercase mt-0.5">2D Retro Privacy & EXIF Scrubber</p>
+                <span class="text-[11px] font-bold text-orange-500 uppercase tracking-widest font-retro">Interactive Tool</span>
+                <h2 class="text-xl font-bold text-white font-retro mt-1">Local Image EXIF Sanitizer</h2>
+                <p class="text-xs text-slate-400 mt-1">Upload an image to inspect and strip metadata instantly. Processed completely in-browser.</p>
             </div>
-        </div>
 
-        <!-- Secure Status -->
-        <div class="flex items-center gap-3">
-            <div class="text-[11px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-3.5 py-1.5 rounded-full flex items-center gap-2 retro-font">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
+            <div class="space-y-4">
+                <label class="dropzone-box block rounded-2xl p-8 text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-[#171d29] text-orange-400 flex items-center justify-center mx-auto mb-3 text-xl font-bold group-hover:scale-110 transition">
+                        📁
+                    </div>
+                    <span id="dropzoneText" class="text-sm font-semibold text-slate-200 block">Drop image here or click to browse</span>
+                    <span class="text-xs text-slate-500 mt-1 block">Supports PNG, JPG, WEBP • Zero Server Upload</span>
+                    <input type="file" id="imageFileInput" accept="image/*" class="hidden">
+                </label>
+
+                <div id="scrubReport" class="hidden bg-[#07090e] border border-emerald-900/60 rounded-xl p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-emerald-400 font-bold">🛡️</span>
+                            <span id="reportFileName" class="text-xs font-bold text-white font-retro truncate max-w-[220px]">image.jpg</span>
+                        </div>
+                        <span class="text-[11px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 px-3 py-1 rounded-full font-retro">EXIF Sanitized & Secured</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                        <div class="bg-[#11151d] p-3 rounded-lg border border-slate-800">
+                            <span class="text-slate-500 block text-[10px] uppercase font-retro">Original Size</span>
+                            <span id="metaSize" class="text-slate-200 font-bold font-retro">--</span>
+                        </div>
+                        <div class="bg-[#11151d] p-3 rounded-lg border border-slate-800">
+                            <span class="text-slate-500 block text-[10px] uppercase font-retro">GPS Exposure</span>
+                            <span class="text-orange-400 font-bold font-retro">Stripped</span>
+                        </div>
+                        <div class="bg-[#11151d] p-3 rounded-lg border border-slate-800">
+                            <span class="text-slate-500 block text-[10px] uppercase font-retro">Device Hash</span>
+                            <span class="text-emerald-400 font-bold font-retro">Cleaned</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                        <div class="text-[11px] text-slate-400">
+                            ✨ Canvas re-rendered cleanly. All sensitive EXIF tags destroyed.
+                        </div>
+                        <a id="downloadCleanBtn" download="artifact_sanitized.png" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs px-5 py-2.5 rounded-xl text-center font-retro transition cursor-pointer">
+                            ⬇️ Download Clean Image
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <!-- Main Content Container -->
-    <main class="space-y-6">
-
-        <!-- Review & Scrub Card -->
-        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-2xl space-y-6">
+        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
             <div>
-                <span class="text-[10px] font-bold text-orange-500 uppercase tracking-widest retro-font">Field Transcript & Metadata Scrub</span>
-                <h2 class="retro-font text-lg font-bold text-white tracking-wide mt-1">Submit your secure feedback</h2>
-                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Upload screenshots safely. Hidden GPS coordinates, device fingerprints, and EXIF footprints are instantly sanitized locally in your browser. Zero server transmission.</p>
+                <span class="text-[11px] font-bold text-orange-500 uppercase tracking-widest font-retro">Feedback & Ratings</span>
+                <h2 class="text-xl font-bold text-white font-retro mt-1">Submit Your Secure Review</h2>
+                <p class="text-xs text-slate-400 mt-1">Share your thoughts on design and privacy performance.</p>
             </div>
 
-            <form id="feedbackForm" class="space-y-5">
-                <!-- Name Field -->
+            <form id="reviewForm" class="space-y-5">
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-2">Your Name / Alias</label>
-                    <input type="text" id="userName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-3 text-sm border transition">
+                    <input type="text" id="reviewerName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-3 text-sm border transition">
                 </div>
 
-                <!-- Star Rating -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Rating</label>
-                    <div class="flex items-center justify-between bg-[#0b0e14] border border-[#222b3b] rounded-xl px-4 py-2.5">
-                        <div id="starContainer" class="flex gap-2 cursor-pointer">
-                            <span data-value="1" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
-                            <span data-value="2" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
-                            <span data-value="3" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
-                            <span data-value="4" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
-                            <span data-value="5" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Rating</label>
+                    <div class="flex items-center justify-between bg-[#07090e] border border-[#222b3b] rounded-xl px-4 py-3">
+                        <div id="starRatingContainer" class="flex gap-2 cursor-pointer text-2xl select-none">
+                            <span data-star="1" class="star-item text-orange-500 transition hover:scale-110">★</span>
+                            <span data-star="2" class="star-item text-orange-500 transition hover:scale-110">★</span>
+                            <span data-star="3" class="star-item text-orange-500 transition hover:scale-110">★</span>
+                            <span data-star="4" class="star-item text-orange-500 transition hover:scale-110">★</span>
+                            <span data-star="5" class="star-item text-orange-500 transition hover:scale-110">★</span>
                         </div>
-                        <span id="ratingText" class="text-xs font-bold text-orange-400 retro-font">5/5 - Flawless</span>
+                        <span id="starScoreLabel" class="text-xs font-bold text-orange-400 font-retro">5/5 - Flawless</span>
                     </div>
                 </div>
 
-                <!-- Feedback Comments -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-2">Feedback & Thoughts</label>
-                    <textarea id="userComment" rows="3" required placeholder="Share your notes on layout, usability, or design..." class="w-full rounded-xl p-4 text-sm border transition resize-none"></textarea>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Comments</label>
+                    <textarea id="reviewerComment" rows="3" required placeholder="Share your experience..." class="w-full rounded-xl p-4 text-sm border transition resize-none"></textarea>
                 </div>
 
-                <!-- Upload Dropzone & Live EXIF Report -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Screenshot (Optional)</label>
-                    <label class="upload-dropzone block cursor-pointer group">
-                        <div class="w-9 h-9 rounded-full bg-[#161c27] text-orange-400 flex items-center justify-center mb-2 mx-auto group-hover:scale-105 transition">
-                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        </div>
-                        <span id="fileName" class="text-xs text-slate-200 font-medium block">Drop image here or click to browse</span>
-                        <span class="text-[11px] text-slate-500 mt-1 block">EXIF scrubbed automatically upon selection</span>
-                        <input type="file" id="imageInput" accept="image/*" class="hidden">
-                    </label>
-
-                    <!-- Live Security Inspector -->
-                    <div class="security-report" id="securityReport">
-                        <div class="flex items-center justify-between mb-2 text-xs font-bold text-emerald-400 retro-font">
-                            <span id="fileNameDisplay" class="truncate max-w-[200px]">image.png</span>
-                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> EXIF Sanitized</span>
-                        </div>
-                        <div class="text-[11px] text-slate-400 space-y-1">
-                            <p>🛡️ GPS Coordinates & Location Stripped</p>
-                            <p>🛡️ Camera Make, Model & Device Fingerprint Wiped</p>
-                            <p>🛡️ Timestamps & Hidden Thumbnails Cleaned</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-slate-950 font-bold py-3 px-6 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/40 cursor-pointer retro-font">
-                    ⚡ Publish Secure Review
+                <button type="submit" class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/40 cursor-pointer font-retro">
+                    ⚡ Publish Review
                 </button>
             </form>
         </section>
 
-        <!-- Entries / Reviews Section -->
         <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-xl space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 class="retro-font text-sm font-bold text-white uppercase tracking-wider">Recent Secure Entries</h3>
-                <span id="entryCount" class="text-xs text-orange-400 font-bold retro-font">1 Entry</span>
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h3 class="font-retro text-sm font-bold text-white uppercase tracking-wider">Recent Entries</h3>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Verified user submissions</p>
+                </div>
+                <span id="totalEntriesCount" class="text-xs text-orange-400 font-bold font-retro bg-orange-950/50 border border-orange-800/40 px-3 py-1.5 rounded-full">0 Entries</span>
             </div>
-            <div id="entriesList" class="space-y-3">
-                <div class="bg-[#0b0e14] border border-[#222b3b] rounded-xl p-4 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-white">Nida</span>
-                        <span class="text-xs text-orange-400">★★★★★</span>
-                    </div>
-                    <p class="text-xs text-slate-300">Absolute clean 2D retro aesthetic! The local EXIF scrubber works smoothly without leaking any metadata.</p>
-                    <div class="text-[10px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-900">
-                        <span>🛡️ Metadata Sanitized Locally</span>
-                        <span>Just now</span>
-                    </div>
+
+            <div id="entriesContainer" class="space-y-3">
+                <div id="emptyEntriesState" class="text-center py-8 text-slate-500 text-xs font-retro">
+                    No entries yet. Be the first to submit a review!
                 </div>
             </div>
         </section>
 
-    </main>
-</div>
+        <footer class="border-t border-slate-800/80 pt-6 pb-4 text-center space-y-1.5">
+            <p class="text-xs text-slate-400 font-retro">© 2026 Artifact. Built with care by Nida.</p>
+            <p class="text-[10px] text-slate-500">Client-Side Secure Architecture • Zero Data Retention Guarantee</p>
+        </footer>
 
-<!-- Footer -->
-<footer class="max-w-2xl mx-auto w-full mt-12 border-t border-slate-800/80 pt-6 pb-4 text-center space-y-1">
-    <p class="text-xs text-slate-400 retro-font">© 2026 Artifact. Built with 2D Retro Privacy & Care by Nida.</p>
-    <p class="text-[10px] text-slate-500">Client-Side Secure Architecture • Zero Data Retention</p>
-</footer>
+    </div>
 
-<script>
-    // Interactive Star Rating Logic
-    const stars = document.querySelectorAll('.star-btn');
-    const ratingText = document.getElementById('ratingText');
-    let currentRating = 5;
+    <script>
+        let selectedStarValue = 5;
+        const starItems = document.querySelectorAll('.star-item');
+        const starScoreLabel = document.getElementById('starScoreLabel');
+        const starLabels = ["1/5 - Needs Work", "2/5 - Fair", "3/5 - Good", "4/5 - Great", "5/5 - Flawless"];
 
-    stars.forEach(star => {
-        star.addEventListener('click', (e) => {
-            const val = parseInt(e.target.getAttribute('data-value'));
-            currentRating = val;
-            stars.forEach((s, idx) => {
-                s.style.color = idx < val ? '#f97316' : '#4b5563';
+        starItems.forEach(star => {
+            star.addEventListener('click', (e) => {
+                const val = parseInt(e.target.getAttribute('data-star'));
+                selectedStarValue = val;
+                starItems.forEach((s, idx) => {
+                    s.style.color = idx < val ? '#f97316' : '#334155';
+                });
+                starScoreLabel.textContent = starLabels[val - 1];
             });
-            const labels = ["Needs Work", "Fair", "Good", "Great", "Flawless"];
-            ratingText.textContent = `${val}/5 - ${labels[val-1]}`;
         });
-    });
 
-    // File Upload & Live Security Report Simulation
-    const imageInput = document.getElementById('imageInput');
-    const fileNameSpan = document.getElementById('fileName');
-    const securityReport = document.getElementById('securityReport');
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-    let selectedFileCleaned = false;
+        const imageFileInput = document.getElementById('imageFileInput');
+        const dropzoneText = document.getElementById('dropzoneText');
+        const scrubReport = document.getElementById('scrubReport');
+        const reportFileName = document.getElementById('reportFileName');
+        const metaSize = document.getElementById('metaSize');
+        const downloadCleanBtn = document.getElementById('downloadCleanBtn');
 
-    imageInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            const file = e.target.files[0];
-            fileNameSpan.textContent = `Selected & Sanitized: ${file.name}`;
-            fileNameDisplay.textContent = file.name;
-            securityReport.classList.add('active');
-            selectedFileCleaned = true;
+        imageFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                reportFileName.textContent = file.name;
+                dropzoneText.textContent = `Selected: ${file.name}`;
+                metaSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+
+                        downloadCleanBtn.href = canvas.toDataURL('image/png');
+                        scrubReport.classList.remove('hidden');
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        const reviewForm = document.getElementById('reviewForm');
+        const entriesContainer = document.getElementById('entriesContainer');
+        const totalEntriesCount = document.getElementById('totalEntriesCount');
+        const emptyEntriesState = document.getElementById('emptyEntriesState');
+        let entryCounter = 0;
+
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reviewerName').value.trim();
+            const comment = document.getElementById('reviewerComment').value.trim();
+            if (!name || !comment) return;
+
+            if (emptyEntriesState) {
+                emptyEntriesState.remove();
+            }
+
+            const entryCard = document.createElement('div');
+            entryCard.className = 'bg-[#07090e] border border-[#222b3b] rounded-xl p-4 space-y-2 transition duration-300';
+            
+            const starsString = '★'.repeat(selectedStarValue);
+            const hasImage = imageFileInput.files.length > 0;
+
+            entryCard.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-white">${escapeHtml(name)}</span>
+                    <span class="text-xs text-orange-400">${starsString}</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(comment)}</p>
+                <div class="text-[10px] text-slate-500 flex items-center justify-between pt-2 border-t border-slate-900 font-retro">
+                    <span>${hasImage ? '🛡️ Image EXIF Scrubbed & Attached' : '🛡️ Text Securely Processed'}</span>
+                    <span>Just now</span>
+                </div>
+            `;
+
+            entriesContainer.prepend(entryCard);
+            entryCounter++;
+            totalEntriesCount.textContent = `${entryCounter} ${entryCounter === 1 ? 'Entry' : 'Entries'}`;
+
+            reviewForm.reset();
+            scrubReport.classList.add('hidden');
+            dropzoneText.textContent = 'Drop image here or click to browse';
+            selectedStarValue = 5;
+            starItems.forEach(s => s.style.color = '#f97316');
+            starScoreLabel.textContent = '5/5 - Flawless';
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
         }
-    });
 
-    // Form Submission & Dynamic Entries Adder
-    const feedbackForm = document.getElementById('feedbackForm');
-    const entriesList = document.getElementById('entriesList');
-    const entryCount = document.getElementById('entryCount');
-    let totalEntries = 1;
-
-    feedbackForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('userName').value;
-        const comment = document.getElementById('userComment').value;
-        
-        // Create new entry card
-        const card = document.createElement('div');
-        card.className = 'bg-[#0b0e14] border border-[#222b3b] rounded-xl p-4 space-y-2 animate-pulse';
-        setTimeout(() => card.classList.remove('animate-pulse'), 500);
-
-        const starsString = '★'.repeat(currentRating);
-        card.innerHTML = `
-            <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-white">${escapeHtml(name)}</span>
-                <span class="text-xs text-orange-400">${starsString}</span>
-            </div>
-            <p class="text-xs text-slate-300">${escapeHtml(comment)}</p>
-            <div class="text-[10px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-900">
-                <span>${selectedFileCleaned ? '🛡️ Image EXIF Scrubbed' : '🛡️ Text Securely Processed'}</span>
-                <span>Just now</span>
-            </div>
-        `;
-
-        entriesList.prepend(card);
-        totalEntries++;
-        entryCount.textContent = `${totalEntries} ${totalEntries === 1 ? 'Entry' : 'Entries'}`;
-
-        // Reset form & security report
-        feedbackForm.reset();
-        securityReport.classList.remove('active');
-        fileNameSpan.textContent = 'Drop image here or click to browse';
-        selectedFileCleaned = false;
-        
-        // Reset stars display
-        stars.forEach((s, idx) => {
-            s.style.color = '#f97316';
+        window.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('privacyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['GPS Coordinates', 'Camera Hardware ID', 'Timestamps', 'Safe Pixel Data'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: ['#ff6a00', '#eab308', '#38bdf8', '#10b981'],
+                        borderWidth: 2,
+                        borderColor: '#11151d'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                font: { family: 'Share Tech Mono', size: 10 },
+                                boxWidth: 12
+                            }
+                        }
+                    }
+                }
+            });
         });
-        ratingText.textContent = '5/5 - Flawless';
-        currentRating = 5;
-
-        alert('Review securely published! All metadata was wiped locally.');
-    });
-
-    function escapeHtml(text) {
-        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-        return text.replace(/[&<>"']/g, m => map[m]);
-    }
-</script>
+    </script>
+</body>
+</html>
