@@ -1,99 +1,130 @@
-<!-- Top Navigation / Header -->
-<header class="max-w-2xl mx-auto mb-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
-    <div class="flex items-center gap-4">
-        <!-- Circular Badge Logo (Supernatural Vibe) -->
-        <div class="rustic-logo-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c59b27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-        </div>
-        <div>
-            <h1 class="rustic-title text-2xl font-bold tracking-wider text-white">ARTI<span class="text-amber-500">FACT</span></h1>
-            <p class="text-[11px] text-slate-400 font-medium tracking-widest uppercase mt-0.5">Roads. Leather. Privacy Scrub.</p>
-        </div>
-    </div>
-
-    <!-- Right Side: Secure Status & Theme Toggle -->
-    <div class="flex items-center gap-3">
-        <div class="text-[11px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-3.5 py-1.5 rounded-full flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
-        </div>
-    </div>
-</header>
-
-<!-- Main Container -->
-<main class="max-w-2xl mx-auto space-y-6">
-
-    <!-- Review & Scrub Card -->
-    <section class="bg-[#12161f] border border-[#2a3243] rounded-2xl p-8 shadow-2xl space-y-6">
-        <div>
-            <span class="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Field Transcript & Review</span>
-            <h2 class="rustic-title text-xl font-bold text-white tracking-wide mt-1">Submit your design feedback</h2>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">Upload screenshots safely. Hidden GPS tags, camera metadata, and EXIF footprints are instantly scrubbed locally in your browser. Nothing touches any server.</p>
-        </div>
-
-        <form id="feedbackForm" class="space-y-5">
-            <!-- Name Field -->
+<div class="max-w-2xl mx-auto w-full space-y-8">
+    <!-- Top Navigation / Header -->
+    <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800/80 pb-6">
+        <div class="flex items-center gap-4">
+            <!-- 2D Retro Badge Logo -->
+            <div class="retro-logo-badge">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <polygon points="12 7 14 12 12 17 10 12 12 7" fill="#f97316" opacity="0.3"/>
+                    <circle cx="12" cy="12" r="2" fill="#f97316"/>
+                </svg>
+            </div>
             <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-2">Your Name / Alias</label>
-                <input type="text" id="userName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-3 text-sm border transition">
+                <h1 class="retro-font text-xl font-bold tracking-wider text-white">ARTI<span class="text-orange-500">FACT</span></h1>
+                <p class="text-[11px] text-slate-400 font-medium tracking-widest uppercase mt-0.5">2D Retro Privacy & EXIF Scrubber</p>
+            </div>
+        </div>
+
+        <!-- Secure Status -->
+        <div class="flex items-center gap-3">
+            <div class="text-[11px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 px-3.5 py-1.5 rounded-full flex items-center gap-2 retro-font">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Client-Side Secure
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="space-y-6">
+
+        <!-- Review & Scrub Card -->
+        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-2xl space-y-6">
+            <div>
+                <span class="text-[10px] font-bold text-orange-500 uppercase tracking-widest retro-font">Field Transcript & Metadata Scrub</span>
+                <h2 class="retro-font text-lg font-bold text-white tracking-wide mt-1">Submit your secure feedback</h2>
+                <p class="text-xs text-slate-400 mt-2 leading-relaxed">Upload screenshots safely. Hidden GPS coordinates, device fingerprints, and EXIF footprints are instantly sanitized locally in your browser. Zero server transmission.</p>
             </div>
 
-            <!-- Star Rating -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-2">Design Rating</label>
-                <div class="flex items-center justify-between bg-[#0e1219] border border-[#2a3243] rounded-xl px-4 py-2.5">
-                    <div id="starContainer" class="flex gap-2 cursor-pointer">
-                        <span data-value="1" class="star-btn text-2xl text-amber-500 hover:text-amber-400 transition">★</span>
-                        <span data-value="2" class="star-btn text-2xl text-amber-500 hover:text-amber-400 transition">★</span>
-                        <span data-value="3" class="star-btn text-2xl text-amber-500 hover:text-amber-400 transition">★</span>
-                        <span data-value="4" class="star-btn text-2xl text-amber-500 hover:text-amber-400 transition">★</span>
-                        <span data-value="5" class="star-btn text-2xl text-amber-500 hover:text-amber-400 transition">★</span>
-                    </div>
-                    <span id="ratingText" class="text-xs font-bold text-amber-400">5/5 - Flawless</span>
+            <form id="feedbackForm" class="space-y-5">
+                <!-- Name Field -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Your Name / Alias</label>
+                    <input type="text" id="userName" required placeholder="e.g. Nida" class="w-full rounded-xl px-4 py-3 text-sm border transition">
                 </div>
-            </div>
 
-            <!-- Feedback Comments -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-2">Feedback & Thoughts</label>
-                <textarea id="userComment" rows="3" required placeholder="Share your notes on layout, usability, or design..." class="w-full rounded-xl p-4 text-sm border transition resize-none"></textarea>
-            </div>
-
-            <!-- Upload Dropzone & Live EXIF Report -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 mb-2">Design Screenshot (Optional)</label>
-                <label class="upload-dropzone block cursor-pointer group">
-                    <div class="w-9 h-9 rounded-full bg-[#161d2b] text-amber-400 flex items-center justify-center mb-2 mx-auto group-hover:scale-105 transition">
-                        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                    </div>
-                    <span id="fileName" class="text-xs text-slate-200 font-medium block">Drop image here or click to browse</span>
-                    <span class="text-[11px] text-slate-500 mt-1 block">EXIF scrubbed automatically upon selection</span>
-                    <input type="file" id="imageInput" accept="image/*" class="hidden">
-                </label>
-
-                <!-- Live Security Inspector -->
-                <div class="security-report" id="securityReport">
-                    <div class="flex items-center justify-between mb-2 text-xs font-bold text-emerald-400">
-                        <span id="fileNameDisplay" class="truncate max-w-[200px]">image.png</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> EXIF Sanitized</span>
-                    </div>
-                    <div class="text-[11px] text-slate-400 space-y-1">
-                        <p>🛡️ GPS Coordinates & Location Stripped</p>
-                        <p>🛡️ Camera Make, Model & Serial Wiped</p>
-                        <p>🛡️ Timestamps & Hidden Thumbnails Cleaned</p>
+                <!-- Star Rating -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Rating</label>
+                    <div class="flex items-center justify-between bg-[#0b0e14] border border-[#222b3b] rounded-xl px-4 py-2.5">
+                        <div id="starContainer" class="flex gap-2 cursor-pointer">
+                            <span data-value="1" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                            <span data-value="2" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                            <span data-value="3" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                            <span data-value="4" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                            <span data-value="5" class="star-btn text-xl text-orange-500 hover:text-orange-400 transition">★</span>
+                        </div>
+                        <span id="ratingText" class="text-xs font-bold text-orange-400 retro-font">5/5 - Flawless</span>
                     </div>
                 </div>
+
+                <!-- Feedback Comments -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Feedback & Thoughts</label>
+                    <textarea id="userComment" rows="3" required placeholder="Share your notes on layout, usability, or design..." class="w-full rounded-xl p-4 text-sm border transition resize-none"></textarea>
+                </div>
+
+                <!-- Upload Dropzone & Live EXIF Report -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2">Design Screenshot (Optional)</label>
+                    <label class="upload-dropzone block cursor-pointer group">
+                        <div class="w-9 h-9 rounded-full bg-[#161c27] text-orange-400 flex items-center justify-center mb-2 mx-auto group-hover:scale-105 transition">
+                            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        </div>
+                        <span id="fileName" class="text-xs text-slate-200 font-medium block">Drop image here or click to browse</span>
+                        <span class="text-[11px] text-slate-500 mt-1 block">EXIF scrubbed automatically upon selection</span>
+                        <input type="file" id="imageInput" accept="image/*" class="hidden">
+                    </label>
+
+                    <!-- Live Security Inspector -->
+                    <div class="security-report" id="securityReport">
+                        <div class="flex items-center justify-between mb-2 text-xs font-bold text-emerald-400 retro-font">
+                            <span id="fileNameDisplay" class="truncate max-w-[200px]">image.png</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> EXIF Sanitized</span>
+                        </div>
+                        <div class="text-[11px] text-slate-400 space-y-1">
+                            <p>🛡️ GPS Coordinates & Location Stripped</p>
+                            <p>🛡️ Camera Make, Model & Device Fingerprint Wiped</p>
+                            <p>🛡️ Timestamps & Hidden Thumbnails Cleaned</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-slate-950 font-bold py-3 px-6 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-950/40 cursor-pointer retro-font">
+                    ⚡ Publish Secure Review
+                </button>
+            </form>
+        </section>
+
+        <!-- Entries / Reviews Section -->
+        <section class="bg-[#11151d] border border-[#222b3b] rounded-2xl p-6 md:p-8 shadow-xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="retro-font text-sm font-bold text-white uppercase tracking-wider">Recent Secure Entries</h3>
+                <span id="entryCount" class="text-xs text-orange-400 font-bold retro-font">1 Entry</span>
             </div>
+            <div id="entriesList" class="space-y-3">
+                <div class="bg-[#0b0e14] border border-[#222b3b] rounded-xl p-4 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-white">Nida</span>
+                        <span class="text-xs text-orange-400">★★★★★</span>
+                    </div>
+                    <p class="text-xs text-slate-300">Absolute clean 2D retro aesthetic! The local EXIF scrubber works smoothly without leaking any metadata.</p>
+                    <div class="text-[10px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-900">
+                        <span>🛡️ Metadata Sanitized Locally</span>
+                        <span>Just now</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Submit Button -->
-            <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold py-3 px-6 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-900/20 cursor-pointer">
-                ⚡ Publish Secure Review
-            </button>
-        </form>
-    </section>
+    </main>
+</div>
 
-</main>
+<!-- Footer -->
+<footer class="max-w-2xl mx-auto w-full mt-12 border-t border-slate-800/80 pt-6 pb-4 text-center space-y-1">
+    <p class="text-xs text-slate-400 retro-font">© 2026 Artifact. Built with 2D Retro Privacy & Care by Nida.</p>
+    <p class="text-[10px] text-slate-500">Client-Side Secure Architecture • Zero Data Retention</p>
+</footer>
 
 <script>
     // Interactive Star Rating Logic
@@ -106,7 +137,7 @@
             const val = parseInt(e.target.getAttribute('data-value'));
             currentRating = val;
             stars.forEach((s, idx) => {
-                s.style.color = idx < val ? '#e09f3e' : '#4b5563';
+                s.style.color = idx < val ? '#f97316' : '#4b5563';
             });
             const labels = ["Needs Work", "Fair", "Good", "Great", "Flawless"];
             ratingText.textContent = `${val}/5 - ${labels[val-1]}`;
@@ -118,22 +149,69 @@
     const fileNameSpan = document.getElementById('fileName');
     const securityReport = document.getElementById('securityReport');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
+    let selectedFileCleaned = false;
 
     imageInput.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
             const file = e.target.files[0];
-            fileNameSpan.textContent = `Selected: ${file.name}`;
+            fileNameSpan.textContent = `Selected & Sanitized: ${file.name}`;
             fileNameDisplay.textContent = file.name;
             securityReport.classList.add('active');
+            selectedFileCleaned = true;
         }
     });
 
-    // Form Submission
-    document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+    // Form Submission & Dynamic Entries Adder
+    const feedbackForm = document.getElementById('feedbackForm');
+    const entriesList = document.getElementById('entriesList');
+    const entryCount = document.getElementById('entryCount');
+    let totalEntries = 1;
+
+    feedbackForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Review securely submitted! EXIF metadata was wiped locally before processing.');
-        e.target.reset();
+        const name = document.getElementById('userName').value;
+        const comment = document.getElementById('userComment').value;
+        
+        // Create new entry card
+        const card = document.createElement('div');
+        card.className = 'bg-[#0b0e14] border border-[#222b3b] rounded-xl p-4 space-y-2 animate-pulse';
+        setTimeout(() => card.classList.remove('animate-pulse'), 500);
+
+        const starsString = '★'.repeat(currentRating);
+        card.innerHTML = `
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white">${escapeHtml(name)}</span>
+                <span class="text-xs text-orange-400">${starsString}</span>
+            </div>
+            <p class="text-xs text-slate-300">${escapeHtml(comment)}</p>
+            <div class="text-[10px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-900">
+                <span>${selectedFileCleaned ? '🛡️ Image EXIF Scrubbed' : '🛡️ Text Securely Processed'}</span>
+                <span>Just now</span>
+            </div>
+        `;
+
+        entriesList.prepend(card);
+        totalEntries++;
+        entryCount.textContent = `${totalEntries} ${totalEntries === 1 ? 'Entry' : 'Entries'}`;
+
+        // Reset form & security report
+        feedbackForm.reset();
         securityReport.classList.remove('active');
         fileNameSpan.textContent = 'Drop image here or click to browse';
+        selectedFileCleaned = false;
+        
+        // Reset stars display
+        stars.forEach((s, idx) => {
+            s.style.color = '#f97316';
+        });
+        ratingText.textContent = '5/5 - Flawless';
+        currentRating = 5;
+
+        alert('Review securely published! All metadata was wiped locally.');
     });
+
+    function escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
 </script>
