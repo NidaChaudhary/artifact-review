@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=35,20,30,25,35&height=180&section=header&text=ARTIFACT&fontSize=42&fontColor=ffb7c5&fontAlignY=35&animation=fadeIn&font=Monospace" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=20,30,40,30,20&height=180&section=header&text=ARTIFACT&fontSize=42&fontColor=ffb7c5&fontAlignY=35&animation=fadeIn&font=Monospace" width="100%" />
 
   <h3> 🌸 Secure EXIF Metadata Scrubber & Privacy Inspector 🌸 </h3>
 
@@ -18,14 +18,14 @@
 
 ### 🌸 About Artifact
 
-**Artifact** is a lightweight, client-side web utility built for my repository to protect user privacy before sharing images online. When you snap a photo with your phone or camera, it secretly stores hidden tracking data like GPS coordinates and device timestamps inside the file. Artifact instantly wipes them locally inside your browser with **zero server upload and complete local privacy**.
+**Artifact** is a lightweight, client-side web utility built for my repository to protect user privacy before sharing images online. When you take a photo with your phone or camera, it secretly stores hidden tracking data like GPS coordinates and device timestamps inside the file. Artifact instantly wipes them locally inside your browser with **zero server upload and complete local privacy**.
 
 ---
 
 ### 🚀 Key Features & Workflow
 
-* 🌿 **Local Privacy First:** All image processing happens directly inside your browser. No server transmission!
-* 🛡️ **Instant Sanitization:** Wipes away GPS locations, timestamps, and camera signatures in a single click.
+* 🌿 **Local Privacy First:** All image processing happens directly inside your browser with zero server transmission.
+* 🛡️ **Instant Sanitization:** Wipes away hidden GPS locations, timestamps, and camera signatures in a single click.
 * 🌸 **Cherry Blossom Vibe:** Styled with a clean dark aesthetic and soft pink accents.
 
 ---
@@ -64,5 +64,5 @@
 <div align="center">
   <p>🌷 <em>"Simplicity is the ultimate sophistication." • Built with coffee and code ☕</em></p>
 
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=35,20,30,25,35&height=80&section=footer" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=20,30,40,30,20&height=80&section=footer" width="100%" />
 </div>
